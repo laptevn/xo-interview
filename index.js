@@ -72,9 +72,10 @@ exports.chargeRequestMemcached = async function (input) {
 
         const newBalance = remainingBalance - charges;
         const isCharged = await chargeMemcached(KEY, newBalance, balanceResponse.cas);
+        remainingBalance = newBalance;
         if (isCharged) {
             return {
-                newBalance,
+                remainingBalance,
                 charges,
                 isAuthorized,
             };
